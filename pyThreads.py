@@ -57,7 +57,7 @@ def time_trial(num_threads, num_operations):
     print("Time taken with", num_threads, "threads:", time_taken, "\n") # Print a message
 
 def prompt_user(query):
-    response = input(query)
+    response = input(query).lower()
 
     try:
         num = int(response)
@@ -73,7 +73,7 @@ def prompt_user(query):
         elif response == "coperations":
             return -1
         elif response == "help":
-            print("Commands:\n\tcoperations: Changes the number of operations\n\texit: Exits the program\n\thelp: list all of the commands\n")
+            print("Commands:\n\tcoperations: Prompts you to change the number of operations\n\texit: Exits the program\n\thelp: list all of the commands\n")
             return prompt_user(query)
         else:
             print("Invalid response. Enter a number or type 'exit' to exit the program.\n")
