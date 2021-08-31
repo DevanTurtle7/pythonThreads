@@ -31,20 +31,20 @@ def benchmark(thread, num_threads):
     for i in range(start, end): # Iterate the given amount of times
         math.exp(random.random()) # Preform an arbitrary operation
 
-def time_trial(n):
+def time_trial(num_threads):
     start_time = time.time()
 
     threads = []
-    for i in range(0, n):
-        thread = mp.Process(target=benchmark, args=(i, n))
-        thread.start()
-        threads.append(thread)
+    for thread in range(0, num_threads):
+        current = mp.Process(target=benchmark, args=(i, num_threads))
+        current.start()
+        threads.append(current)
 
-    for i in range(0, n):
-        threads[i].join()
+    for thread in threads:
+        thread.join()
 
     end_time = time.time()
-    print("Time taken with", n, "threads:", end_time - start_time)
+    print("Time taken with", num_threads, "threads:", end_time - start_time)
 
 if __name__ == "__main__":
     for i in range(1, 7):
