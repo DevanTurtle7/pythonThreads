@@ -72,6 +72,9 @@ def prompt_user(query):
             return None
         elif response == "coperations":
             return -1
+        elif response == "help":
+            print("Commands:\n\tcoperations: Changes the number of operations\n\texit: Exits the program\n\thelp: list all of the commands\n")
+            return prompt_user(query)
         else:
             print("Invalid response. Enter a number or type 'exit' to exit the program.\n")
             return prompt_user(query)
