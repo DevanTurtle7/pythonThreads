@@ -70,6 +70,8 @@ def prompt_user(query):
     except:
         if response == "exit":
             return None
+        elif response == "coperations":
+            return -1
         else:
             print("Invalid response. Enter a number or type 'exit' to exit the program.\n")
             return prompt_user(query)
@@ -85,7 +87,9 @@ if __name__ == "__main__":
     while (not exit):
         num_threads = prompt_user("Enter the number of threads to test: ")
 
-        if num_threads is not None:
-            time_trial(num_threads, num_operations)
-        else:
+        if num_threads is None:
             exit = True
+        elif num_threads == -1:
+            num_operations = prompt_user("Enter a number of operations (suggested: 10000000): ")
+        else:
+            time_trial(num_threads, num_operations)
