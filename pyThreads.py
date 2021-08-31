@@ -1,37 +1,33 @@
 import multiprocessing as mp
 import math
+import random
 import time
 
-NUM_THREADS = 6
-ASCII_START = 65
-ASCII_END = 127
+NUM_ITERATIONS = 10000000
 
-# the encrypt/decrypt function or whatever
-def my_func(n):
-    avg = math.floor((ASCII_END - ASCII_START) / NUM_THREADS)
-    start = ASCII_START + (avg * n)
-    end = start + avg if n + 1 != NUM_THREADS else ASCII_END
+def benchmark(n, num_threads):
+    avg = math.floor(NUM_ITERATIONS / num_threads)
+    start = avg * n
+    end = start + avg if n + 1 != num_threads else NUM_ITERATIONS
+    
+    for i in range(start, end):
+        math.exp(random.random())
 
-    for i1 in range(start, end):
-        for i2 in range(ASCII_START, ASCII_END):
-            for i3 in range(ASCII_START, ASCII_END):
-                # do stuff
-                pass
-
-def thread_function(n):
-    my_func(n)
-
-if __name__ == "__main__":
+def time_trial(n):
     start_time = time.time()
 
     threads = []
-    for i in range(0, NUM_THREADS):
-        thread = mp.Process(target=thread_function, args=(i,))
+    for i in range(0, n):
+        thread = mp.Process(target=benchmark, args=(i, n))
         thread.start()
         threads.append(thread)
 
-    for i in range(0, NUM_THREADS):
+    for i in range(0, n):
         threads[i].join()
 
     end_time = time.time()
-    print("Time taken:", end_time - start_time)
+    print("Time taken with", n, "threads:", end_time - start_time)
+
+if __name__ == "__main__":
+    for i in range(1, 7):
+        time_trial(i)
