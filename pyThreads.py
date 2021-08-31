@@ -1,6 +1,7 @@
 """
 A random playground to mess around with threads and learn how they work in
-python.
+python. It is currently a command line interface to test different thread
+counts with different numbers of operations.
 
 author: Devan Kavalchek
 """
@@ -57,42 +58,48 @@ def time_trial(num_threads, num_operations):
     print("Time taken with", num_threads, "threads:", time_taken, "\n") # Print a message
 
 def prompt_user(query):
-    response = input(query).lower()
+    """
+    Prompts a user to enter a number
+
+    Parameters:
+        query: A message that will display to the user when prompting them
+    """
+    response = input(query).lower() # Prompt the user and convert their response to lowercase
 
     try:
-        num = int(response)
+        num = int(response) # Convert the response to an integer
 
-        if num > 0:
-            return num
+        if num > 0: # Check if the number is greater than 0
+            return num # Return the number that the user entered
         else:
-            print("Invalid response. The number must be greater than 0.\n")
-            return prompt_user(query)
-    except:
-        if response == "exit":
-            return None
-        elif response == "coperations":
-            return -1
-        elif response == "help":
-            print("Commands:\n\tcoperations: Prompts you to change the number of operations\n\texit: Exits the program\n\thelp: list all of the commands\n")
-            return prompt_user(query)
+            print("Invalid response. The number must be greater than 0.\n") # Print a message to the user
+            return prompt_user(query) # Prompt the user again
+    except: # The response was not an integer
+        if response == "exit": # Check if the user entered the exit command
+            return None # Return None (exit the program)
+        elif response == "coperations": # Check if the user entered the coperations command
+            return -1 # Return -1
+        elif response == "help": # Check if the user entered the help command
+            print("Commands:\n\tcoperations: Prompts you to change the number of operations\n\texit: Exits the program\n\thelp: list all of the commands\n") # Print a list of commands to the user
+            return prompt_user(query) # Prompt the user again
         else:
-            print("Invalid response. Enter a number or type 'exit' to exit the program.\n")
-            return prompt_user(query)
+            print("Invalid response. Enter a number or type 'exit' to exit the program.\n") # Print a message to the user
+            return prompt_user(query) # Prompt the user again
 
 if __name__ == "__main__":
-    exit = False
+    exit = False # Keeps track of if the program should exit or not
     
-    num_operations = prompt_user("Enter a number of operations (suggested: 10000000): ")
+    num_operations = prompt_user("Enter a number of operations (suggested: 10000000): ") # Prompt the user to enter the number of operations
 
-    if (num_operations is None):
-        exit = True
+    if (num_operations is None): # Check if the user entered the exit command
+        exit = True # Exit the program
 
-    while (not exit):
-        num_threads = prompt_user("Enter the number of threads to test: ")
+    while (not exit): # Loop until the user exits
+        num_threads = prompt_user("Enter the number of threads to test: ") # Prompt the user to enter a number of threads to test
 
-        if num_threads is None:
-            exit = True
-        elif num_threads == -1:
-            num_operations = prompt_user("Enter a number of operations (suggested: 10000000): ")
+        if num_threads is None: # Check if the user entered the exit command
+            exit = True # Exit the program
+        elif num_threads == -1: # Check if the user entered the coperations command
+            num_operations = prompt_user("Enter a number of operations (suggested: 10000000): ") # Prompt the user to enter the number operations
         else:
-            time_trial(num_threads, num_operations)
+            time_trial(num_threads, num_operations) # Run a time trial for the given number of threads and operations
